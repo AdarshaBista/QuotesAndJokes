@@ -7,8 +7,17 @@ import 'package:quotes_and_jokes/models/joke.dart';
 class JokeApiService {
   Future<Joke> getRandom() async {
     try {
-      http.Response res = await http.get('https://sv443.net/jokeapi/v2/joke/Any');
+      http.Response res = await http.get('https://official-joke-api.appspot.com/jokes/random');
       return Joke.fromJson(jsonDecode(res.body));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<Joke>> getTen() async {
+    try {
+      http.Response res = await http.get('https://official-joke-api.appspot.com/jokes/ten');
+      return (jsonDecode(res.body) as List).map((j) => Joke.fromJson(j as Map<String, dynamic>)).toList();
     } catch (e) {
       return null;
     }

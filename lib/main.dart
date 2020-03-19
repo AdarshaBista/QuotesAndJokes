@@ -1,73 +1,52 @@
 import 'package:flutter/material.dart';
 
-import 'package:quotes_and_jokes/models/joke.dart';
-import 'package:quotes_and_jokes/models/quote.dart';
+import 'package:quotes_and_jokes/ui/shared/styles.dart';
+
+import 'package:quotes_and_jokes/stores/jokes_store.dart';
 
 import 'package:quotes_and_jokes/services/joke_api_service.dart';
-import 'package:quotes_and_jokes/services/quote_api_service.dart';
 
-void main() => runApp(App());
+import 'package:quotes_and_jokes/ui/pages/nav_page.dart';
 
-class App extends StatefulWidget {
-  final QuoteApiService quoteApiService = QuoteApiService();
-  final JokeApiService jokeApiService = JokeApiService();
+import 'package:states_rebuilder/states_rebuilder.dart';
 
-  @override
-  _AppState createState() => _AppState();
+import 'dart:io';
+import 'package:flutter/foundation.dart' show debugDefaultTargetPlatformOverride;
+
+void _setTargetPlatformForDesktop() {
+  TargetPlatform targetPlatform;
+  if (Platform.isMacOS) {
+    targetPlatform = TargetPlatform.iOS;
+  } else if (Platform.isLinux || Platform.isWindows) {
+    targetPlatform = TargetPlatform.android;
+  }
+  if (targetPlatform != null) {
+    debugDefaultTargetPlatformOverride = targetPlatform;
+  }
 }
 
-class _AppState extends State<App> {
-  Joke joke;
-  Quote quote;
+void main() {
+  _setTargetPlatformForDesktop();
+  runApp(App());
+}
 
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Quotes and Jokes',
+      debugShowCheckedModeBanner: false,
+      title: 'Jokes and Quotes',
       theme: ThemeData(
-        primaryColor: Colors.deepPurple,
         fontFamily: 'RobotoSlab',
+        brightness: Brightness.light,
+        primaryColor: AppColors.primary,
+        accentColor: AppColors.accent,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('Quotes and Jokes'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              FlatButton(
-                child: Text('RANDOM JOKE'),
-                onPressed: () async {
-                  joke = await widget.jokeApiService.getRandom();
-                  setState(() {});
-                },
-              ),
-              if (joke != null)
-                Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(joke.type == 'single' ? joke.joke : joke.setup + '\n' + joke.delivery),
-                ),
-              SizedBox(height: 16.0),
-              Divider(thickness: 2.0),
-              SizedBox(height: 16.0),
-              FlatButton(
-                child: Text('RANDOM QUOTE'),
-                onPressed: () async {
-                  quote = await widget.quoteApiService.getRandom();
-                  setState(() {});
-                },
-              ),
-              if (quote != null)
-                Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text('${quote.text} - ${quote.author}'),
-                ),
-            ],
-          ),
-        ),
+      home: Injector(
+        inject: [
+          Inject<JokesStore>(() => JokesStore(JokeApiService())),
+        ],
+        builder: (_) => NavPage(),
       ),
     );
   }
