@@ -19,7 +19,7 @@ class FavouriteIcon extends StatelessWidget {
       onTap: onPressed,
       child: Icon(
         isFavourite ? Icons.favorite : Icons.favorite_border,
-        size: 20.0,
+        size: 24.0,
         color: color,
       ),
     );

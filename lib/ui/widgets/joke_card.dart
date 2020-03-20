@@ -21,56 +21,49 @@ class JokeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color cardColor = AppColors.cardColors[joke.id % AppColors.cardColors.length];
+    Color accent = AppColors.accentColors[joke.id % AppColors.accentColors.length];
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomRight,
-          colors: [
-            cardColor.withOpacity(0.4),
-            cardColor.withOpacity(0.2),
-          ],
-        ),
+        color: AppColors.secondary,
       ),
       child: Column(
         children: <Widget>[
           JokeFlipText(
-            cardKey: cardKey,
             joke: joke,
+            cardKey: cardKey,
           ),
           Divider(
-            color: cardColor.withOpacity(0.2),
-            height: 20.0,
+            color: accent.withOpacity(0.3),
+            height: 24.0,
           ),
           Row(
             children: <Widget>[
               Tag(
                 label: joke.type,
-                color: cardColor,
+                color: accent,
               ),
-              const Spacer(),
+              const SizedBox(width: 16.0),
               FavouriteIcon(
                 isFavourite: joke.isFavourite,
-                color: cardColor,
+                color: accent,
                 onPressed: () {
                   Injector.getAsReactive<JokesStore>().setState(
                     (jokesStore) => jokesStore.toggleFavourite(joke),
                   );
-                  _showSnackBar(context, cardColor);
+                  _showSnackBar(context, accent);
                 },
               ),
-              const SizedBox(width: 16.0),
+              const Spacer(),
               GestureDetector(
                 onTap: () => cardKey.currentState.toggleCard(),
                 child: Icon(
-                  Icons.arrow_forward,
-                  size: 20.0,
-                  color: cardColor,
+                  Icons.compare_arrows,
+                  size: 24.0,
+                  color: accent,
                 ),
               ),
             ],
@@ -80,14 +73,14 @@ class JokeCard extends StatelessWidget {
     );
   }
 
-  void _showSnackBar(BuildContext context, Color cardColor) {
+  void _showSnackBar(BuildContext context, Color bgColor) {
     String msg = joke.isFavourite ? 'Added to favourites!' : 'Removed from favourites!';
-    Color textColor = ThemeData.estimateBrightnessForColor(cardColor) == Brightness.light ? Colors.black : Colors.white;
+    Color textColor = ThemeData.estimateBrightnessForColor(bgColor) == Brightness.light ? Colors.black : Colors.white;
 
     Scaffold.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(milliseconds: 600),
-        backgroundColor: cardColor,
+        backgroundColor: bgColor,
         content: Row(
           children: <Widget>[
             Text(

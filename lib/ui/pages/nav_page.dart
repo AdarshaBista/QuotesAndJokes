@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:quotes_and_jokes/ui/shared/styles.dart';
 
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -21,13 +24,20 @@ class _NavPageState extends State<NavPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.light,
+      ),
+    );
+
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(4.0),
         margin: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.secondary,
           borderRadius: BorderRadius.circular(64.0),
           boxShadow: [
             BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(0.5)),

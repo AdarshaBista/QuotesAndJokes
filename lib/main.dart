@@ -37,7 +37,12 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Jokes and Quotes',
       theme: ThemeData(
-        fontFamily: 'RobotoSlab',
+        scaffoldBackgroundColor: AppColors.primary,
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.dark,
+          color: AppColors.primary,
+        ),
+        fontFamily: 'Sen',
         brightness: Brightness.light,
         primaryColor: AppColors.primary,
         accentColor: AppColors.accent,

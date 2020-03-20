@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTextStyles {
   static const TextStyle _base = TextStyle(
     color: Colors.black,
-    fontFamily: 'RobotoSlab',
+    fontFamily: 'Sen',
   );
 
   // Dark

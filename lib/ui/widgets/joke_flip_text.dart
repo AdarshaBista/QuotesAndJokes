@@ -20,22 +20,24 @@ class JokeFlipText extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlipCard(
       key: cardKey,
-      flipOnTouch: false,
+      flipOnTouch: true,
       speed: 300,
       front: Container(
+        padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Text(
             joke.setup,
-            style: AppTextStyles.largeDark,
+            style: AppTextStyles.mediumLight,
             textAlign: TextAlign.center,
           ),
         ),
       ),
       back: Container(
+        padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Text(
             joke.punchline,
-            style: AppTextStyles.largeDark,
+            style: AppTextStyles.mediumLight,
             textAlign: TextAlign.center,
           ),
         ),

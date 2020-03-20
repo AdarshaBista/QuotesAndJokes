@@ -40,14 +40,20 @@ flutter:
 
   uses-material-design: true
 
-  # assets:
+  assets:
+    - assets/images/
 
   fonts:
-    - family: RobotoSlab
+    - family: Sen
       fonts:
-        - asset: assets/fonts/RobotoSlab-Bold.ttf
+        - asset: assets/fonts/Sen-Bold.ttf
           weight: 700
-        - asset: assets/fonts/RobotoSlab-Light.ttf
-          weight: 300
-        - asset: assets/fonts/RobotoSlab-Regular.ttf
+        - asset: assets/fonts/Sen-Regular.ttf
+          weight: 500
+    
+    - family: Sura
+      fonts:
+        - asset: assets/fonts/Sura-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Sura-Regular.ttf
           weight: 500

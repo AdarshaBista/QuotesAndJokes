@@ -14,15 +14,23 @@ class JokesPage extends StatelessWidget {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
           SliverAppBar(
-            backgroundColor: Colors.white,
             elevation: 8.0,
-            expandedHeight: 110.0,
+            pinned: true,
+            expandedHeight: 140.0,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.parallax,
-              titlePadding: const EdgeInsets.all(8.0),
+              titlePadding: const EdgeInsets.all(16.0),
               title: Text(
                 'JOKES',
-                style: AppTextStyles.extraLargeDark,
+                style: AppTextStyles.extraLargeLight,
+              ),
+              background: Padding(
+                padding: const EdgeInsets.only(left: 60.0, right: 60.0, top: 20.0),
+                child: Image.asset(
+                  'assets/images/jokes_header.png',
+                  color: AppColors.secondary,
+                  alignment: Alignment.centerRight,
+                ),
               ),
             ),
           ),
