@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:quotes_and_jokes/ui/widgets/jokes_list.dart';
 
 import 'package:states_rebuilder/states_rebuilder.dart';
 import 'package:quotes_and_jokes/ui/shared/styles.dart';
 
 import 'package:quotes_and_jokes/stores/jokes_store.dart';
-
-import 'package:quotes_and_jokes/ui/widgets/joke_card.dart';
 
 class JokesPage extends StatelessWidget {
   @override
@@ -64,12 +63,8 @@ class JokesPage extends StatelessWidget {
       onRefresh: () async {
         await model.setState((js) async => await js.fetchJokes());
       },
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(),
-        itemCount: model.state.jokes.length,
-        itemBuilder: (BuildContext context, int index) => JokeCard(
-          joke: model.state.jokes[index],
-        ),
+      child: JokesList(
+        model: model,
       ),
     );
   }
