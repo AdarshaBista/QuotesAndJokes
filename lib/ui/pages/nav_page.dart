@@ -16,11 +16,6 @@ class NavPage extends StatefulWidget {
 
 class _NavPageState extends State<NavPage> {
   int _selectedIndex = 0;
-  final List<Widget> _pages = [
-    JokesPage(),
-    QuotesPage(),
-    FavouritesPage(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +72,14 @@ class _NavPageState extends State<NavPage> {
           ],
         ),
       ),
-      body: _pages[_selectedIndex],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: <Widget>[
+          JokesPage(),
+          QuotesPage(),
+          FavouritesPage(),
+        ],
+      ),
     );
   }
 }
