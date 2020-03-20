@@ -13,58 +13,73 @@ class JokesPage extends StatelessWidget {
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
-          SliverAppBar(
-            elevation: 8.0,
-            pinned: true,
-            expandedHeight: 140.0,
-            flexibleSpace: FlexibleSpaceBar(
-              collapseMode: CollapseMode.parallax,
-              titlePadding: const EdgeInsets.all(16.0),
-              title: Text(
-                'JOKES',
-                style: AppTextStyles.extraLargeLight,
-              ),
-              background: Padding(
-                padding: const EdgeInsets.only(left: 60.0, right: 60.0, top: 20.0),
-                child: Image.asset(
-                  'assets/images/jokes_header.png',
-                  color: AppColors.secondary,
-                  alignment: Alignment.centerRight,
-                ),
-              ),
-            ),
-          ),
+          _buildAppBar(),
         ],
         body: StateBuilder<JokesStore>(
           models: [
             Injector.getAsReactive<JokesStore>(),
           ],
-          initState: (_, reactiveModel) async {
-            await reactiveModel.setState((jokesProvider) async => await jokesProvider.fetchJokes());
+          initState: (_, model) async {
+            await model.setState((jokesStore) async => await jokesStore.fetchJokes());
           },
-          builder: (_, reactiveModel) {
-            return reactiveModel.whenConnectionState(
+          builder: (_, model) {
+            return model.whenConnectionState(
               onIdle: () => Center(child: CircularProgressIndicator()),
               onWaiting: () => Center(child: CircularProgressIndicator()),
-              onData: (jokesProvider) => RefreshIndicator(
-                onRefresh: () async {
-                  await reactiveModel.setState((jokesProvider) async => await jokesProvider.fetchJokes());
-                },
-                child: ListView.builder(
-                  itemCount: reactiveModel.state.jokes.length,
-                  itemBuilder: (BuildContext context, int index) => JokeCard(
-                    joke: reactiveModel.state.jokes[index],
-                  ),
-                ),
-              ),
-              onError: (_) => Icon(
-                Icons.error_outline,
-                size: 100.0,
-                color: Colors.red,
-              ),
+              onData: (_) => _buildJokesList(model),
+              onError: (_) => _buildErrorIcon(),
             );
           },
         ),
+      ),
+    );
+  }
+
+  SliverAppBar _buildAppBar() {
+    return SliverAppBar(
+      pinned: true,
+      elevation: 8.0,
+      expandedHeight: 140.0,
+      flexibleSpace: FlexibleSpaceBar(
+        collapseMode: CollapseMode.parallax,
+        titlePadding: const EdgeInsets.all(16.0),
+        title: Text(
+          'JOKES',
+          style: AppTextStyles.extraLargeLight,
+        ),
+        background: Padding(
+          padding: const EdgeInsets.only(left: 60.0, right: 60.0, top: 20.0),
+          child: Image.asset(
+            'assets/images/jokes_header.png',
+            color: AppColors.secondary,
+            alignment: Alignment.centerRight,
+          ),
+        ),
+      ),
+    );
+  }
+
+  RefreshIndicator _buildJokesList(ReactiveModel<JokesStore> model) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        await model.setState((js) async => await js.fetchJokes());
+      },
+      child: ListView.builder(
+        physics: BouncingScrollPhysics(),
+        itemCount: model.state.jokes.length,
+        itemBuilder: (BuildContext context, int index) => JokeCard(
+          joke: model.state.jokes[index],
+        ),
+      ),
+    );
+  }
+
+  Center _buildErrorIcon() {
+    return Center(
+      child: Icon(
+        Icons.error_outline,
+        size: 100.0,
+        color: Colors.red,
       ),
     );
   }
