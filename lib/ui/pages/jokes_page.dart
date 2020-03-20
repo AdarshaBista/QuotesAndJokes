@@ -25,7 +25,7 @@ class JokesPage extends StatelessWidget {
             return model.whenConnectionState(
               onIdle: () => Center(child: CircularProgressIndicator()),
               onWaiting: () => Center(child: CircularProgressIndicator()),
-              onData: (_) => _buildJokesList(model),
+              onData: (_) => JokesList(model: model),
               onError: (_) => _buildErrorIcon(),
             );
           },
@@ -54,17 +54,6 @@ class JokesPage extends StatelessWidget {
             alignment: Alignment.centerRight,
           ),
         ),
-      ),
-    );
-  }
-
-  RefreshIndicator _buildJokesList(ReactiveModel<JokesStore> model) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        await model.setState((js) async => await js.fetchJokes());
-      },
-      child: JokesList(
-        model: model,
       ),
     );
   }

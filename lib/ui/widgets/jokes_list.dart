@@ -5,7 +5,7 @@ import 'package:quotes_and_jokes/stores/jokes_store.dart';
 
 import 'package:quotes_and_jokes/ui/widgets/joke_card.dart';
 
-class JokesList extends StatefulWidget {
+class JokesList extends StatelessWidget {
   final ReactiveModel<JokesStore> model;
 
   const JokesList({
@@ -13,40 +13,35 @@ class JokesList extends StatefulWidget {
   }) : assert(model != null);
 
   @override
-  _JokesListState createState() => _JokesListState();
-}
-
-class _JokesListState extends State<JokesList> {
-  ScrollController _scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController()
-      ..addListener(() async {
-        if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-          await widget.model.state.fetchJokes();
-        }
-      });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        controller: _scrollController,
-        physics: BouncingScrollPhysics(),
-        itemCount: widget.model.state.jokes.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == widget.model.state.jokes.length)
-            return Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+    return NotificationListener<ScrollNotification>(
+      onNotification: (sn) {
+        if (sn.metrics.pixels == sn.metrics.maxScrollExtent) {
+          model.state.fetchJokes().then((_) => model.setState((_) => null));
+        }
+        return true;
+      },
+      child: RefreshIndicator(
+        onRefresh: () async {
+          await model.setState((jokesStore) async => await jokesStore.fetchJokes());
+        },
+        child: ListView.builder(
+          physics: BouncingScrollPhysics(),
+          itemCount: model.state.jokes.length + 1,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == model.state.jokes.length)
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            return JokeCard(
+              joke: model.state.jokes[index],
             );
-          return JokeCard(
-            joke: widget.model.state.jokes[index],
-          );
-        });
+          },
+        ),
+      ),
+    );
   }
 }
