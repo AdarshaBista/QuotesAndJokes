@@ -5,10 +5,12 @@ import 'package:quotes_and_jokes/ui/shared/styles.dart';
 class CollapsibleAppBar extends StatelessWidget {
   final String title;
   final String imageUrl;
+  final double elevation;
 
   const CollapsibleAppBar({
     @required this.title,
     @required this.imageUrl,
+    this.elevation = 8.0,
   })  : assert(title != null),
         assert(imageUrl != null);
 
@@ -16,7 +18,7 @@ class CollapsibleAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      elevation: 8.0,
+      elevation: elevation,
       expandedHeight: 140.0,
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,

@@ -14,7 +14,7 @@ class JokesPage extends StatelessWidget {
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
-          CollapsibleAppBar(
+          const CollapsibleAppBar(
             title: 'JOKES',
             imageUrl: 'assets/images/jokes_header.png',
           ),

@@ -14,7 +14,7 @@ class QuotesPage extends StatelessWidget {
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
-          CollapsibleAppBar(
+          const CollapsibleAppBar(
             title: 'QUOTES',
             imageUrl: 'assets/images/quotes_header.png',
           ),

@@ -9,7 +9,7 @@ class QuotesStore {
   List<Quote> get quotes => _quotes.toList();
 
   final Set<Quote> _favouriteQuotes = {};
-  List<Quote> get favouriteJokes => _favouriteQuotes.toList();
+  List<Quote> get favouriteQuotes => _favouriteQuotes.toList();
 
   QuotesStore(this._quoteApiService);
 
