@@ -5,15 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:quotes_and_jokes/models/joke.dart';
 
 class JokeApiService {
-  Future<Joke> getRandom() async {
-    try {
-      http.Response res = await http.get('https://official-joke-api.appspot.com/jokes/random');
-      return Joke.fromJson(jsonDecode(res.body));
-    } catch (e) {
-      return null;
-    }
-  }
-
   Future<List<Joke>> getTen() async {
     try {
       http.Response res = await http.get('https://official-joke-api.appspot.com/jokes/ten');

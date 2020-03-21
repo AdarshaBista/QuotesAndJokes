@@ -8,8 +8,8 @@ class JokesStore {
   final Set<Joke> _jokes = {};
   List<Joke> get jokes => _jokes.toList();
 
-  final Set<Joke> _favouriteJokes = {};
-  List<Joke> get favouriteJokes => _favouriteJokes.toList();
+  final List<Joke> _favouriteJokes = [];
+  List<Joke> get favouriteJokes => _favouriteJokes;
 
   JokesStore(this._jokeApiService);
 
@@ -17,7 +17,7 @@ class JokesStore {
     joke.isFavourite = !joke.isFavourite;
 
     if (joke.isFavourite) {
-      _favouriteJokes.add(joke);
+      _favouriteJokes.insert(0, joke);
     } else {
       _favouriteJokes.remove(joke);
     }
@@ -29,18 +29,9 @@ class JokesStore {
 
   Future<void> fetchJokes() async {
     List<Joke> fetchedJokes = await _jokeApiService.getTen();
-    if (fetchedJokes == null) {
-      fetchedJokes = [
-        Joke(
-          id: -1,
-          type: 'error',
-          setup: 'The only joke here is ...',
-          punchline: 'Your internet connection.',
-          isFavourite: false,
-        )
-      ];
-    }
+    if (fetchedJokes == null) return;
 
+    fetchedJokes.forEach((j) => j.isFavourite = _favouriteJokes.contains(j));
     _jokes.addAll(fetchedJokes);
   }
 }

@@ -5,6 +5,7 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 import 'package:quotes_and_jokes/stores/quotes_store.dart';
 
 import 'package:quotes_and_jokes/ui/widgets/quote_card.dart';
+import 'package:quotes_and_jokes/ui/widgets/error_icon.dart';
 
 class QuotesList extends StatelessWidget {
   final ReactiveModel<QuotesStore> model;
@@ -33,12 +34,14 @@ class QuotesList extends StatelessWidget {
           itemCount: model.state.quotes.length + 1,
           itemBuilder: (BuildContext context, int index) {
             if (index == model.state.quotes.length)
-              return Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+              return model.isWaiting
+                  ? Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : const ErrorIcon();
 
             return QuoteCard(
               quote: model.state.quotes[index],

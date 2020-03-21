@@ -29,10 +29,10 @@ class QuoteCard extends StatelessWidget {
         color: AppColors.secondary,
         borderRadius: BorderRadius.circular(16.0),
         image: DecorationImage(
-          image:NetworkImage('https://source.unsplash.com/800x800/?$searchStr'),
+          image: NetworkImage('https://source.unsplash.com/800x800/?$searchStr'),
           fit: BoxFit.cover,
           alignment: Alignment.centerRight,
-          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.srcATop),
+          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.65), BlendMode.srcATop),
         ),
       ),
       child: Column(

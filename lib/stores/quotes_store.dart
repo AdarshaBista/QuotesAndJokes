@@ -8,8 +8,8 @@ class QuotesStore {
   final Set<Quote> _quotes = {};
   List<Quote> get quotes => _quotes.toList();
 
-  final Set<Quote> _favouriteQuotes = {};
-  List<Quote> get favouriteQuotes => _favouriteQuotes.toList();
+  final List<Quote> _favouriteQuotes = [];
+  List<Quote> get favouriteQuotes => _favouriteQuotes;
 
   QuotesStore(this._quoteApiService);
 
@@ -17,7 +17,7 @@ class QuotesStore {
     quote.isFavourite = !quote.isFavourite;
 
     if (quote.isFavourite) {
-      _favouriteQuotes.add(quote);
+      _favouriteQuotes.insert(0, quote);
     } else {
       _favouriteQuotes.remove(quote);
     }
@@ -29,14 +29,9 @@ class QuotesStore {
 
   Future<void> fetchQuote() async {
     Quote fetchedQuote = await _quoteApiService.getRandom();
-    if (fetchedQuote == null) {
-      fetchedQuote = Quote(
-        id: 'error',
-        text: 'An error has occured...',
-        author: 'John Doe',
-        isFavourite: false,
-      );
-    }
+    if (fetchedQuote == null) return;
+
+    fetchedQuote.isFavourite = _favouriteQuotes.contains(fetchedQuote);
     _quotes.add(fetchedQuote);
   }
 }
