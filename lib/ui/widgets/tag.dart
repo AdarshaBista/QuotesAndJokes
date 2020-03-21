@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:quotes_and_jokes/ui/shared/styles.dart';
 
 class Tag extends StatelessWidget {

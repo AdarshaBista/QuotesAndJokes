@@ -3,17 +3,15 @@ import 'package:quotes_and_jokes/models/joke.dart';
 import 'package:quotes_and_jokes/services/joke_api_service.dart';
 
 class JokesStore {
-  JokeApiService _jokeApiService;
+  final JokeApiService _jokeApiService;
 
-  Set<Joke> _jokes = {};
+  final Set<Joke> _jokes = {};
   List<Joke> get jokes => _jokes.toList();
 
-  Set<Joke> _favouriteJokes = {};
+  final Set<Joke> _favouriteJokes = {};
   List<Joke> get favouriteJokes => _favouriteJokes.toList();
 
-  JokesStore(
-    this._jokeApiService,
-  );
+  JokesStore(this._jokeApiService);
 
   void toggleFavourite(Joke joke) {
     joke.isFavourite = !joke.isFavourite;

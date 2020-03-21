@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:quotes_and_jokes/ui/shared/styles.dart';
 
 import 'package:quotes_and_jokes/stores/jokes_store.dart';
+import 'package:quotes_and_jokes/stores/quotes_store.dart';
 
 import 'package:quotes_and_jokes/services/joke_api_service.dart';
+import 'package:quotes_and_jokes/services/quote_api_service.dart';
 
 import 'package:quotes_and_jokes/ui/pages/nav_page.dart';
 
@@ -50,6 +52,7 @@ class App extends StatelessWidget {
       home: Injector(
         inject: [
           Inject<JokesStore>(() => JokesStore(JokeApiService())),
+          Inject<QuotesStore>(() => QuotesStore(QuoteApiService())),
         ],
         builder: (_) => NavPage(),
       ),

@@ -20,16 +20,16 @@ class Quote {
     return Quote(
       id: json['_id'] as String,
       text: json['quoteText'] as String,
-      author: json['quoteAuthor'] as String,
+      author: (json['quoteAuthor'] as String).isEmpty ? 'Unknown' : json['quoteAuthor'] as String,
       isFavourite: json['isFavourite'] ?? false,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'text': text,
-      'author': author,
+      '_id': id,
+      'quoteText': text,
+      'quoteAuthor': author,
       'isFavourite': isFavourite,
     };
   }

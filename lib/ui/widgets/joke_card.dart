@@ -8,6 +8,7 @@ import 'package:quotes_and_jokes/stores/jokes_store.dart';
 
 import 'package:flip_card/flip_card.dart';
 import 'package:quotes_and_jokes/ui/widgets/tag.dart';
+import 'package:quotes_and_jokes/ui/widgets/ui_helper.dart';
 import 'package:quotes_and_jokes/ui/widgets/favourite_icon.dart';
 import 'package:quotes_and_jokes/ui/widgets/joke_flip_text.dart';
 
@@ -54,7 +55,7 @@ class JokeCard extends StatelessWidget {
                   Injector.getAsReactive<JokesStore>().setState(
                     (jokesStore) => jokesStore.toggleFavourite(joke),
                   );
-                  _showSnackBar(context, accent);
+                  UiHelper.showFavouriteStatus(context, accent, joke.isFavourite);
                 },
               ),
               const Spacer(),
@@ -69,32 +70,6 @@ class JokeCard extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  void _showSnackBar(BuildContext context, Color bgColor) {
-    String msg = joke.isFavourite ? 'Added to favourites!' : 'Removed from favourites!';
-    Color textColor = ThemeData.estimateBrightnessForColor(bgColor) == Brightness.light ? Colors.black : Colors.white;
-
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(milliseconds: 600),
-        backgroundColor: bgColor,
-        content: Row(
-          children: <Widget>[
-            Text(
-              msg,
-              style: AppTextStyles.smallDark.copyWith(color: textColor),
-            ),
-            const SizedBox(width: 12.0),
-            Icon(
-              joke.isFavourite ? Icons.favorite : Icons.favorite_border,
-              size: 20.0,
-              color: textColor,
-            ),
-          ],
-        ),
       ),
     );
   }
