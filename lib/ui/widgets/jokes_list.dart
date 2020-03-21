@@ -33,14 +33,12 @@ class JokesList extends StatelessWidget {
           itemCount: model.state.jokes.length + 1,
           itemBuilder: (BuildContext context, int index) {
             if (index == model.state.jokes.length)
-              return model.isWaiting
-                  ? Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : const ErrorIcon();
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
             return JokeCard(
               joke: model.state.jokes[index],
             );
