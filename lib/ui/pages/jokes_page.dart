@@ -9,6 +9,8 @@ import 'package:quotes_and_jokes/ui/widgets/jokes_list.dart';
 import 'package:quotes_and_jokes/ui/widgets/collapsible_app_bar.dart';
 
 class JokesPage extends StatelessWidget {
+  const JokesPage();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +30,8 @@ class JokesPage extends StatelessWidget {
           },
           builder: (_, model) {
             return model.whenConnectionState(
-              onIdle: () => Center(child: CircularProgressIndicator()),
-              onWaiting: () => Center(child: CircularProgressIndicator()),
+              onIdle: () => const Center(child: CircularProgressIndicator()),
+              onWaiting: () => const Center(child: CircularProgressIndicator()),
               onData: (_) => JokesList(model: model),
               onError: (_) => const ErrorIcon(),
             );

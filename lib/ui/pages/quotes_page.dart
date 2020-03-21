@@ -9,6 +9,8 @@ import 'package:quotes_and_jokes/ui/widgets/quotes_list.dart';
 import 'package:quotes_and_jokes/ui/widgets/collapsible_app_bar.dart';
 
 class QuotesPage extends StatelessWidget {
+  const QuotesPage();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

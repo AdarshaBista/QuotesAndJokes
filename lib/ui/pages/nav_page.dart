@@ -75,9 +75,9 @@ class _NavPageState extends State<NavPage> {
       body: IndexedStack(
         index: _selectedIndex,
         children: <Widget>[
-          QuotesPage(),
-          JokesPage(),
-          FavouritesPage(),
+          const QuotesPage(),
+          const JokesPage(),
+          const FavouritesPage(),
         ],
       ),
     );

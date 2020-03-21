@@ -12,6 +12,8 @@ import 'package:quotes_and_jokes/ui/widgets/favourites_tab_bar.dart';
 import 'package:quotes_and_jokes/ui/widgets/collapsible_app_bar.dart';
 
 class FavouritesPage extends StatelessWidget {
+  const FavouritesPage();
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
