@@ -23,6 +23,10 @@ class QuotesStore {
     }
   }
 
+  void clearQuotes() {
+    _quotes.clear();
+  }
+
   Future<void> fetchQuote() async {
     Quote fetchedQuote = await _quoteApiService.getRandom();
     if (fetchedQuote == null) {

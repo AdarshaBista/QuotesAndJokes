@@ -24,7 +24,10 @@ class QuotesList extends StatelessWidget {
       },
       child: RefreshIndicator(
         onRefresh: () async {
-          await model.setState((jokesStore) async => await jokesStore.fetchQuote());
+          await model.setState((quotesStore) async {
+            quotesStore.clearQuotes();
+            return await quotesStore.fetchQuote();
+          });
         },
         child: ListView.builder(
           itemCount: model.state.quotes.length + 1,

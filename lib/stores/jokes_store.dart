@@ -23,6 +23,10 @@ class JokesStore {
     }
   }
 
+  void clearJokes() {
+    _jokes.clear();
+  }
+
   Future<void> fetchJokes() async {
     List<Joke> fetchedJokes = await _jokeApiService.getTen();
     if (fetchedJokes == null) {

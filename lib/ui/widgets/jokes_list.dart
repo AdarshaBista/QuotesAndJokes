@@ -23,7 +23,10 @@ class JokesList extends StatelessWidget {
       },
       child: RefreshIndicator(
         onRefresh: () async {
-          await model.setState((jokesStore) async => await jokesStore.fetchJokes());
+          await model.setState((jokesStore) async {
+            jokesStore.clearJokes();
+            return await jokesStore.fetchJokes();
+          });
         },
         child: ListView.builder(
           itemCount: model.state.jokes.length + 1,

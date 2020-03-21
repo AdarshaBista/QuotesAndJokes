@@ -47,7 +47,7 @@ class JokeCard extends StatelessWidget {
                 label: joke.type,
                 color: accent,
               ),
-              const SizedBox(width: 16.0),
+              const Spacer(),
               FavouriteIcon(
                 isFavourite: joke.isFavourite,
                 color: accent,
@@ -58,7 +58,7 @@ class JokeCard extends StatelessWidget {
                   UiHelper.showFavouriteStatus(context, accent, joke.isFavourite);
                 },
               ),
-              const Spacer(),
+              const SizedBox(width: 16.0),
               GestureDetector(
                 onTap: () => cardKey.currentState.toggleCard(),
                 child: Icon(
