@@ -52,16 +52,16 @@ class _NavPageState extends State<NavPage> {
           },
           tabs: [
             GButton(
-              icon: Icons.tag_faces,
-              text: 'Jokes',
-              iconColor: Colors.green,
-              backgroundColor: Colors.green,
-            ),
-            GButton(
               icon: Icons.format_quote,
               text: 'Quotes',
               iconColor: Colors.blue,
               backgroundColor: Colors.blue,
+            ),
+            GButton(
+              icon: Icons.tag_faces,
+              text: 'Jokes',
+              iconColor: Colors.green,
+              backgroundColor: Colors.green,
             ),
             GButton(
               icon: Icons.favorite,
@@ -75,8 +75,8 @@ class _NavPageState extends State<NavPage> {
       body: IndexedStack(
         index: _selectedIndex,
         children: <Widget>[
-          JokesPage(),
           QuotesPage(),
+          JokesPage(),
           FavouritesPage(),
         ],
       ),
