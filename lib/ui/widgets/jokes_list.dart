@@ -4,7 +4,6 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 import 'package:quotes_and_jokes/stores/jokes_store.dart';
 
 import 'package:quotes_and_jokes/ui/widgets/joke_card.dart';
-import 'package:quotes_and_jokes/ui/widgets/error_icon.dart';
 
 class JokesList extends StatelessWidget {
   final ReactiveModel<JokesStore> model;

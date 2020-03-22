@@ -39,31 +39,27 @@ class FavouritesPage extends StatelessWidget {
     );
   }
 
-  StateBuilder<QuotesStore> _buildFavQuotes() {
-    return StateBuilder(
-      models: [Injector.getAsReactive<QuotesStore>()],
-      builder: (_, ReactiveModel<QuotesStore> model) => model.state.favouriteQuotes.isEmpty
-          ? const EmptyIcon()
-          : ListView.builder(
-              itemCount: model.state.favouriteQuotes.length,
-              itemBuilder: (BuildContext context, int index) => QuoteCard(
-                quote: model.state.favouriteQuotes[index],
-              ),
+  Widget _buildFavQuotes() {
+    QuotesStore quotesStore = Injector.get<QuotesStore>();
+    return quotesStore.favouriteQuotes.isEmpty
+        ? const EmptyIcon()
+        : ListView.builder(
+            itemCount: quotesStore.favouriteQuotes.length,
+            itemBuilder: (BuildContext context, int index) => QuoteCard(
+              quote: quotesStore.favouriteQuotes[index],
             ),
-    );
+          );
   }
 
-  StateBuilder<JokesStore> _buildFavJokes() {
-    return StateBuilder(
-      models: [Injector.getAsReactive<JokesStore>()],
-      builder: (_, ReactiveModel<JokesStore> model) => model.state.favouriteJokes.isEmpty
-          ? const EmptyIcon()
-          : ListView.builder(
-              itemCount: model.state.favouriteJokes.length,
-              itemBuilder: (BuildContext context, int index) => JokeCard(
-                joke: model.state.favouriteJokes[index],
-              ),
+  Widget _buildFavJokes() {
+    JokesStore jokesStore = Injector.get<JokesStore>();
+    return jokesStore.favouriteJokes.isEmpty
+        ? const EmptyIcon()
+        : ListView.builder(
+            itemCount: jokesStore.favouriteJokes.length,
+            itemBuilder: (BuildContext context, int index) => JokeCard(
+              joke: jokesStore.favouriteJokes[index],
             ),
-    );
+          );
   }
 }

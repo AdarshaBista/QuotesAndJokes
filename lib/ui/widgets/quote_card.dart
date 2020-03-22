@@ -18,9 +18,9 @@ class QuoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> searchTerms = quote.text.split(' ').where((word) => word.length > 4).toList()
+    final List<String> searchTerms = quote.text.split(' ').where((word) => word.length > 4).toList()
       ..addAll(quote.author.split(' '));
-    String searchStr = searchTerms.join(',');
+    final String searchTerm = searchTerms.join(',');
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
@@ -29,7 +29,7 @@ class QuoteCard extends StatelessWidget {
         color: AppColors.secondary,
         borderRadius: BorderRadius.circular(16.0),
         image: DecorationImage(
-          image: NetworkImage('https://source.unsplash.com/800x800/?$searchStr'),
+          image: NetworkImage('https://source.unsplash.com/800x800/?$searchTerm'),
           fit: BoxFit.cover,
           alignment: Alignment.centerRight,
           colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.65), BlendMode.srcATop),

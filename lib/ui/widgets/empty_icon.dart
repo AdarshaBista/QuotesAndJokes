@@ -13,14 +13,14 @@ class EmptyIcon extends StatelessWidget {
         children: <Widget>[
           Image.asset(
             'assets/images/empty.png',
-            color: AppColors.secondary,
+            color: Colors.white54,
             width: MediaQuery.of(context).size.width * 0.5,
           ),
           const SizedBox(height: 24.0),
           Text(
-            'Nothing found...',
+            'Nothing here...',
             style: AppTextStyles.largeDark.copyWith(
-              color: AppColors.secondary,
+              color: Colors.white54,
             ),
           ),
         ],
