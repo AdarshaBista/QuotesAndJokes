@@ -3,6 +3,9 @@ import 'package:quotes_and_jokes/models/quote.dart';
 import 'package:quotes_and_jokes/services/quote_api_service.dart';
 
 class QuotesStore {
+  final int maxQuotes = 4000;
+  bool hasError = false;
+
   final QuoteApiService _quoteApiService;
 
   final Set<Quote> _quotes = {};
@@ -16,11 +19,10 @@ class QuotesStore {
   void toggleFavourite(Quote quote) {
     quote.isFavourite = !quote.isFavourite;
 
-    if (quote.isFavourite) {
+    if (quote.isFavourite)
       _favouriteQuotes.insert(0, quote);
-    } else {
+    else
       _favouriteQuotes.remove(quote);
-    }
   }
 
   void clearQuotes() {
@@ -29,8 +31,12 @@ class QuotesStore {
 
   Future<void> fetchQuote() async {
     Quote fetchedQuote = await _quoteApiService.getRandom();
-    if (fetchedQuote == null) return;
+    if (fetchedQuote == null) {
+      hasError = true;
+      return;
+    }
 
+    hasError = false;
     fetchedQuote.isFavourite = _favouriteQuotes.contains(fetchedQuote);
     _quotes.add(fetchedQuote);
   }

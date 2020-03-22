@@ -7,7 +7,7 @@ import 'package:quotes_and_jokes/models/quote.dart';
 import 'package:quotes_and_jokes/stores/quotes_store.dart';
 
 import 'package:quotes_and_jokes/ui/widgets/ui_helper.dart';
-import 'package:quotes_and_jokes/ui/widgets/favourite_icon.dart';
+import 'package:quotes_and_jokes/ui/widgets/common/favourite_icon.dart';
 
 class QuoteCard extends StatelessWidget {
   final Quote quote;
@@ -18,8 +18,11 @@ class QuoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> searchTerms = quote.text.split(' ').where((word) => word.length > 4).toList()
-      ..addAll(quote.author.split(' '));
+    final List<String> searchTerms = quote.text
+        .split(' ')
+        .where((word) => word.length > 4)
+        .toList()
+          ..addAll(quote.author.split(' '));
     final String searchTerm = searchTerms.join(',');
 
     return Container(
@@ -29,10 +32,12 @@ class QuoteCard extends StatelessWidget {
         color: AppColors.secondary,
         borderRadius: BorderRadius.circular(16.0),
         image: DecorationImage(
-          image: NetworkImage('https://source.unsplash.com/800x800/?$searchTerm'),
+          image:
+              NetworkImage('https://source.unsplash.com/800x800/?$searchTerm'),
           fit: BoxFit.cover,
           alignment: Alignment.centerRight,
-          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.65), BlendMode.srcATop),
+          colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.65), BlendMode.srcATop),
         ),
       ),
       child: Column(
@@ -54,7 +59,8 @@ class QuoteCard extends StatelessWidget {
               Flexible(
                 child: Text(
                   '- ${quote.author}',
-                  style: AppTextStyles.mediumLight.copyWith(color: Colors.white70),
+                  style:
+                      AppTextStyles.mediumLight.copyWith(color: Colors.white70),
                   textAlign: TextAlign.left,
                   maxLines: 2,
                 ),
@@ -68,7 +74,9 @@ class QuoteCard extends StatelessWidget {
                     (quotesStore) => quotesStore.toggleFavourite(quote),
                   );
                   UiHelper.showFavouriteStatus(
-                      context, quote.isFavourite ? Colors.green : Colors.redAccent, quote.isFavourite);
+                      context,
+                      quote.isFavourite ? Colors.green : Colors.redAccent,
+                      quote.isFavourite);
                 },
               ),
             ],

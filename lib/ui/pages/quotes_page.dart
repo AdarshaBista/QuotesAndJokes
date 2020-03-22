@@ -4,9 +4,9 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 
 import 'package:quotes_and_jokes/stores/quotes_store.dart';
 
-import 'package:quotes_and_jokes/ui/widgets/error_icon.dart';
-import 'package:quotes_and_jokes/ui/widgets/quotes_list.dart';
-import 'package:quotes_and_jokes/ui/widgets/collapsible_app_bar.dart';
+import 'package:quotes_and_jokes/ui/widgets/indicators/error_icon.dart';
+import 'package:quotes_and_jokes/ui/widgets/quotes_page/quotes_list.dart';
+import 'package:quotes_and_jokes/ui/widgets/common/collapsible_app_bar.dart';
 
 class QuotesPage extends StatelessWidget {
   const QuotesPage();
@@ -15,7 +15,7 @@ class QuotesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
+        headerSliverBuilder: (BuildContext context, _) => [
           const CollapsibleAppBar(
             title: 'QUOTES',
             imageUrl: 'assets/images/quotes_header.png',
@@ -26,7 +26,8 @@ class QuotesPage extends StatelessWidget {
             Injector.getAsReactive<QuotesStore>(),
           ],
           initState: (_, model) async {
-            await model.setState((jokesStore) async => await jokesStore.fetchQuote());
+            await model
+                .setState((jokesStore) async => await jokesStore.fetchQuote());
           },
           builder: (_, model) {
             return model.whenConnectionState(

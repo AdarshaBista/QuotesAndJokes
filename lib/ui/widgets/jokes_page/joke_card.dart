@@ -7,10 +7,10 @@ import 'package:quotes_and_jokes/models/joke.dart';
 import 'package:quotes_and_jokes/stores/jokes_store.dart';
 
 import 'package:flip_card/flip_card.dart';
-import 'package:quotes_and_jokes/ui/widgets/tag.dart';
 import 'package:quotes_and_jokes/ui/widgets/ui_helper.dart';
-import 'package:quotes_and_jokes/ui/widgets/favourite_icon.dart';
-import 'package:quotes_and_jokes/ui/widgets/joke_flip_text.dart';
+import 'package:quotes_and_jokes/ui/widgets/common/tag.dart';
+import 'package:quotes_and_jokes/ui/widgets/common/favourite_icon.dart';
+import 'package:quotes_and_jokes/ui/widgets/jokes_page/joke_flip_text.dart';
 
 class JokeCard extends StatelessWidget {
   final Joke joke;
