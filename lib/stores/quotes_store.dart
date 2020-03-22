@@ -1,5 +1,6 @@
 import 'package:quotes_and_jokes/models/quote.dart';
 
+import 'package:quotes_and_jokes/services/quote_db_service.dart';
 import 'package:quotes_and_jokes/services/quote_api_service.dart';
 
 class QuotesStore {
@@ -7,6 +8,7 @@ class QuotesStore {
   bool hasError = false;
 
   final QuoteApiService _quoteApiService;
+  final QuoteDbService _quoteDbService;
 
   final Set<Quote> _quotes = {};
   List<Quote> get quotes => _quotes.toList();
@@ -14,15 +16,24 @@ class QuotesStore {
   final List<Quote> _favouriteQuotes = [];
   List<Quote> get favouriteQuotes => _favouriteQuotes;
 
-  QuotesStore(this._quoteApiService);
+  QuotesStore(this._quoteApiService, this._quoteDbService) {
+    loadFavouriteQuotes();
+  }
 
-  void toggleFavourite(Quote quote) {
+  void loadFavouriteQuotes() async {
+    _favouriteQuotes.addAll(await _quoteDbService.getFavQuotes());
+  }
+
+  Future<void> toggleFavourite(Quote quote) async {
     quote.isFavourite = !quote.isFavourite;
 
-    if (quote.isFavourite)
-      _favouriteQuotes.insert(0, quote);
-    else
+    if (quote.isFavourite) {
+      bool success = await _quoteDbService.insert(quote);
+      if (success) _favouriteQuotes.insert(0, quote);
+    } else {
+      await _quoteDbService.delete(quote);
       _favouriteQuotes.remove(quote);
+    }
   }
 
   void clearQuotes() {

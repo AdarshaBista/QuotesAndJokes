@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Joke {
+  int localId;
   final int id;
   final String type;
   final String setup;
@@ -8,6 +9,7 @@ class Joke {
   bool isFavourite;
 
   Joke({
+    this.localId,
     @required this.id,
     @required this.type,
     @required this.setup,
@@ -21,6 +23,7 @@ class Joke {
 
   factory Joke.fromJson(Map<String, dynamic> json) {
     return Joke(
+      localId: json['localId'],
       id: json['id'] as int,
       type: json['type'] as String,
       setup: json['setup'] as String,
@@ -31,6 +34,7 @@ class Joke {
 
   Map<String, dynamic> toJson() {
     return {
+      'localId': localId,
       'id': id,
       'type': type,
       'setup': setup,
@@ -41,7 +45,8 @@ class Joke {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is Joke && runtimeType == other.runtimeType && id == other.id;
+      identical(this, other) ||
+      other is Joke && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;

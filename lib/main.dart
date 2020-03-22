@@ -1,36 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'package:states_rebuilder/states_rebuilder.dart';
 import 'package:quotes_and_jokes/ui/shared/styles.dart';
 
 import 'package:quotes_and_jokes/stores/jokes_store.dart';
 import 'package:quotes_and_jokes/stores/quotes_store.dart';
 
+import 'package:quotes_and_jokes/services/joke_db_service.dart';
+import 'package:quotes_and_jokes/services/quote_db_service.dart';
 import 'package:quotes_and_jokes/services/joke_api_service.dart';
 import 'package:quotes_and_jokes/services/quote_api_service.dart';
 
 import 'package:quotes_and_jokes/ui/pages/nav_page.dart';
 
-import 'package:states_rebuilder/states_rebuilder.dart';
-
-import 'dart:io';
-import 'package:flutter/foundation.dart' show debugDefaultTargetPlatformOverride;
-
-void _setTargetPlatformForDesktop() {
-  TargetPlatform targetPlatform;
-  if (Platform.isMacOS) {
-    targetPlatform = TargetPlatform.iOS;
-  } else if (Platform.isLinux || Platform.isWindows) {
-    targetPlatform = TargetPlatform.android;
-  }
-  if (targetPlatform != null) {
-    debugDefaultTargetPlatformOverride = targetPlatform;
-  }
-}
-
-void main() {
-  _setTargetPlatformForDesktop();
-  runApp(App());
-}
+void main() => runApp(App());
 
 class App extends StatelessWidget {
   @override
@@ -51,8 +34,22 @@ class App extends StatelessWidget {
       ),
       home: Injector(
         inject: [
-          Inject<JokesStore>(() => JokesStore(JokeApiService())),
-          Inject<QuotesStore>(() => QuotesStore(QuoteApiService())),
+          Inject<JokeApiService>(() => JokeApiService()),
+          Inject<JokeDbService>(() => JokeDbService()),
+          Inject<QuoteDbService>(() => QuoteDbService()),
+          Inject<QuoteApiService>(() => QuoteApiService()),
+          Inject<JokesStore>(
+            () => JokesStore(
+              Injector.get<JokeApiService>(),
+              Injector.get<JokeDbService>(),
+            ),
+          ),
+          Inject<QuotesStore>(
+            () => QuotesStore(
+              Injector.get<QuoteApiService>(),
+              Injector.get<QuoteDbService>(),
+            ),
+          ),
         ],
         builder: (_) => NavPage(),
       ),
