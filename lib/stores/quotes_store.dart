@@ -27,13 +27,12 @@ class QuotesStore {
   Future<void> toggleFavourite(Quote quote) async {
     quote.isFavourite = !quote.isFavourite;
 
-    if (quote.isFavourite) {
-      bool success = await _quoteDbService.insert(quote);
-      if (success) _favouriteQuotes.insert(0, quote);
-    } else {
-      await _quoteDbService.delete(quote);
-      _favouriteQuotes.remove(quote);
-    }
+    if (quote.isFavourite)
+      _quoteDbService.insert(quote).then((success) {
+        if (success) _favouriteQuotes.insert(0, quote);
+      });
+    else
+      _quoteDbService.delete(quote).then((_) => _favouriteQuotes.remove(quote));
   }
 
   void clearQuotes() {
