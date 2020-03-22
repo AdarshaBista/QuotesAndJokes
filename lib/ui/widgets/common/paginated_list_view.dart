@@ -5,7 +5,7 @@ import 'package:quotes_and_jokes/ui/widgets/indicators/error_icon.dart';
 import 'package:quotes_and_jokes/ui/widgets/indicators/finished_icon.dart';
 import 'package:quotes_and_jokes/ui/widgets/indicators/loading_indicator.dart';
 
-class PaginatedListView extends StatefulWidget {
+class PaginatedListView extends StatelessWidget {
   final RefreshCallback onRefresh;
   final Function onLoadMore;
   final IndexedWidgetBuilder itemBuilder;
@@ -25,53 +25,32 @@ class PaginatedListView extends StatefulWidget {
   });
 
   @override
-  _PaginatedListViewState createState() => _PaginatedListViewState();
-}
-
-class _PaginatedListViewState<T> extends State<PaginatedListView> {
-  ScrollController _scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController()
-      ..addListener(() {
-        if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent -
-                widget.loadMoreOffset) {
-          if (widget.hasMore) widget.onLoadMore();
-        }
-      });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: widget.onRefresh,
-      child: widget.itemCount == 0
-          ? SingleChildScrollView(
-              child: widget.hasError ? const ErrorIcon() : const EmptyIcon(),
-            )
-          : ListView.builder(
-              controller: _scrollController,
-              itemCount: widget.itemCount + 1,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == widget.itemCount) {
-                  if (widget.hasMore && !widget.hasError)
-                    return const LoadingIndicator();
-                  if (widget.hasError) return const ErrorIcon();
-                  return const FinishedIcon();
-                }
-
-                return widget.itemBuilder(context, index);
-              },
-            ),
+    return NotificationListener<ScrollNotification>(
+      onNotification: (ScrollNotification sn) {
+        if (sn.metrics.pixels >= sn.metrics.maxScrollExtent - loadMoreOffset) {
+          if (hasMore) onLoadMore();
+        }
+        return true;
+      },
+      child: RefreshIndicator(
+        onRefresh: onRefresh,
+        child: itemCount == 0
+            ? SingleChildScrollView(
+                child: hasError ? const ErrorIcon() : const EmptyIcon(),
+              )
+            : ListView.builder(
+                itemCount: itemCount + 1,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == itemCount) {
+                    if (hasMore && !hasError) return const LoadingIndicator();
+                    if (hasError) return const ErrorIcon();
+                    return const FinishedIcon();
+                  }
+                  return itemBuilder(context, index);
+                },
+              ),
+      ),
     );
   }
 }
