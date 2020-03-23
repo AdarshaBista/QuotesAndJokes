@@ -26,7 +26,7 @@ class _FavouriteIconState extends State<FavouriteIcon>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 150),
       lowerBound: 0.0,
       upperBound: 0.1,
     )..addListener(() {
