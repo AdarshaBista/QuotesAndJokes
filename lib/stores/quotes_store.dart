@@ -24,15 +24,16 @@ class QuotesStore {
     _favouriteQuotes.addAll(await _quoteDbService.getFavQuotes());
   }
 
-  Future<void> toggleFavourite(Quote quote) async {
+  void toggleFavourite(Quote quote) {
     quote.isFavourite = !quote.isFavourite;
 
-    if (quote.isFavourite)
-      _quoteDbService.insert(quote).then((success) {
-        if (success) _favouriteQuotes.insert(0, quote);
-      });
-    else
-      _quoteDbService.delete(quote).then((_) => _favouriteQuotes.remove(quote));
+    if (quote.isFavourite) {
+      _favouriteQuotes.insert(0, quote);
+      _quoteDbService.insert(quote);
+    } else {
+      _favouriteQuotes.remove(quote);
+      _quoteDbService.delete(quote);
+    }
   }
 
   void clearQuotes() {

@@ -24,15 +24,16 @@ class JokesStore {
     _favouriteJokes.addAll(await _jokeDbService.getFavJokes());
   }
 
-  Future<void> toggleFavourite(Joke joke) async {
+  void toggleFavourite(Joke joke) {
     joke.isFavourite = !joke.isFavourite;
 
-    if (joke.isFavourite)
-      _jokeDbService.insert(joke).then((success) {
-        if (success) _favouriteJokes.insert(0, joke);
-      });
-    else
-      _jokeDbService.delete(joke).then((_) => _favouriteJokes.remove(joke));
+    if (joke.isFavourite) {
+      _favouriteJokes.insert(0, joke);
+      _jokeDbService.insert(joke);
+    } else {
+      _favouriteJokes.remove(joke);
+      _jokeDbService.delete(joke);
+    }
   }
 
   void clearJokes() {
