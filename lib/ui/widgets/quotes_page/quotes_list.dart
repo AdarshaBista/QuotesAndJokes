@@ -24,8 +24,8 @@ class QuotesList extends StatelessWidget {
           },
         );
       },
-      onLoadMore: () {
-        model.state.fetchQuote().then((_) => model.setState((_) => null));
+      onLoadMore: () async {
+        await model.state.fetchQuote().then((_) => model.setState((_) => null));
       },
       itemBuilder: (_, index) => QuoteCard(
         quote: model.state.quotes[index],

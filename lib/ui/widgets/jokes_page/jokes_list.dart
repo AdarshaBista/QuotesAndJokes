@@ -24,8 +24,8 @@ class JokesList extends StatelessWidget {
           },
         );
       },
-      onLoadMore: () {
-        model.state.fetchJokes().then((_) => model.setState((_) => null));
+      onLoadMore: () async {
+        await model.state.fetchJokes().then((_) => model.setState((_) => null));
       },
       itemBuilder: (_, index) => JokeCard(
         joke: model.state.jokes[index],
