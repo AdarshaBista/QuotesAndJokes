@@ -22,12 +22,10 @@ class JokesPage extends StatelessWidget {
           ),
         ],
         body: StateBuilder<JokesStore>(
-          models: [
-            Injector.getAsReactive<JokesStore>()
-          ],
+          models: [Injector.getAsReactive<JokesStore>()],
           initState: (_, model) async {
             await model
-                .setState((jokesStore) async => await jokesStore.fetchJokes());
+                .setState((jokesStore) async => await jokesStore.fetch());
           },
           builder: (_, model) {
             return model.whenConnectionState(

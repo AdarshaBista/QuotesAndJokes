@@ -27,7 +27,7 @@ class QuotesPage extends StatelessWidget {
           ],
           initState: (_, model) async {
             await model
-                .setState((jokesStore) async => await jokesStore.fetchQuote());
+                .setState((jokesStore) async => await jokesStore.fetch());
           },
           builder: (_, model) {
             return model.whenConnectionState(

@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 
-class Joke {
-  int localId;
+import 'package:quotes_and_jokes/models/favouritable.dart';
+
+class Joke extends Favouritable {
   final int id;
   final String type;
   final String setup;
   final String punchline;
-  bool isFavourite;
 
   Joke({
-    this.localId,
+    localId,
+    @required isFavourite,
     @required this.id,
     @required this.type,
     @required this.setup,
     @required this.punchline,
-    @required this.isFavourite,
   })  : assert(id != null),
         assert(type != null),
         assert(setup != null),
         assert(punchline != null),
-        assert(isFavourite != null);
+        assert(isFavourite != null),
+        super(
+          localId: localId,
+          isFavourite: isFavourite,
+        );
 
   factory Joke.fromJson(Map<String, dynamic> json) {
     return Joke(
@@ -32,14 +36,15 @@ class Joke {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'localId': localId,
+      'isFavourite': isFavourite,
       'id': id,
       'type': type,
       'setup': setup,
       'punchline': punchline,
-      'isFavourite': isFavourite,
     };
   }
 

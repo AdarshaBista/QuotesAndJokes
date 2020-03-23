@@ -4,8 +4,10 @@ import 'package:http/http.dart' as http;
 
 import 'package:quotes_and_jokes/models/quote.dart';
 
-class QuoteApiService {
-  Future<List<Quote>> fetchThree() async {
+import 'package:quotes_and_jokes/services/api_service.dart';
+
+class QuoteApiService implements ApiService<Quote> {
+  Future<List<Quote>> fetch() async {
     final List<Quote> fetchedQuotes = [];
     try {
       for (int i = 0; i < 3; ++i) {

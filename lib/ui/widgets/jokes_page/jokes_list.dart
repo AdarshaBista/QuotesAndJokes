@@ -19,19 +19,19 @@ class JokesList extends StatelessWidget {
       onRefresh: () async {
         await model.setState(
           (jokesStore) async {
-            jokesStore.clearJokes();
-            return await jokesStore.fetchJokes();
+            jokesStore.clear();
+            return await jokesStore.fetch();
           },
         );
       },
       onLoadMore: () async {
-        await model.state.fetchJokes().then((_) => model.setState((_) => null));
+        await model.state.fetch().then((_) => model.setState((_) => null));
       },
       itemBuilder: (_, index) => JokeCard(
         joke: model.state.jokes[index],
       ),
       hasError: model.state.hasError,
-      hasMore: model.state.jokes.length < model.state.maxJokes,
+      hasMore: model.state.jokes.length < model.state.maxItems,
       itemCount: model.state.jokes.length,
       loadMoreOffset: 0.0,
     );

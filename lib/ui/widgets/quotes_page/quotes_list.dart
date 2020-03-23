@@ -19,19 +19,19 @@ class QuotesList extends StatelessWidget {
       onRefresh: () async {
         await model.setState(
           (quotesStore) async {
-            quotesStore.clearQuotes();
-            return await quotesStore.fetchQuote();
+            quotesStore.clear();
+            return await quotesStore.fetch();
           },
         );
       },
       onLoadMore: () async {
-        await model.state.fetchQuote().then((_) => model.setState((_) => null));
+        await model.state.fetch().then((_) => model.setState((_) => null));
       },
       itemBuilder: (_, index) => QuoteCard(
         quote: model.state.quotes[index],
       ),
       hasError: model.state.hasError,
-      hasMore: model.state.quotes.length < model.state.maxQuotes,
+      hasMore: model.state.quotes.length < model.state.maxItems,
       itemCount: model.state.quotes.length,
     );
   }

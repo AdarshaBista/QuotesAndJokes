@@ -4,8 +4,10 @@ import 'package:http/http.dart' as http;
 
 import 'package:quotes_and_jokes/models/joke.dart';
 
-class JokeApiService {
-  Future<List<Joke>> fetchTen() async {
+import 'package:quotes_and_jokes/services/api_service.dart';
+
+class JokeApiService implements ApiService<Joke> {
+  Future<List<Joke>> fetch() async {
     try {
       http.Response res =
           await http.get('https://official-joke-api.appspot.com/jokes/ten');
