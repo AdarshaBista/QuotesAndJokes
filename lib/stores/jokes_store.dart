@@ -41,7 +41,7 @@ class JokesStore {
   }
 
   Future<void> fetchJokes() async {
-    List<Joke> fetchedJokes = await _jokeApiService.getTen();
+    List<Joke> fetchedJokes = await _jokeApiService.fetchTen();
     if (fetchedJokes == null) {
       hasError = true;
       return;

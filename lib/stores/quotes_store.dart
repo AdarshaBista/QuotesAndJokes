@@ -41,12 +41,7 @@ class QuotesStore {
   }
 
   Future<void> fetchQuote() async {
-    List<Quote> fetchedQuotes = await Future.wait([
-      _quoteApiService.getRandom(),
-      _quoteApiService.getRandom(),
-      _quoteApiService.getRandom(),
-    ]);
-
+    List<Quote> fetchedQuotes = await _quoteApiService.fetchThree();
     if (fetchedQuotes == null) {
       hasError = true;
       return;

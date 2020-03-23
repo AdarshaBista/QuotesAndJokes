@@ -24,7 +24,6 @@ dependencies:
   sembast: ^2.3.0
   path_provider: ^1.6.5
   animator: ^1.0.0+5
-  animated_text_kit: ^2.0.0
   flip_card: ^0.4.4
   google_nav_bar: ^2.1.0
 
