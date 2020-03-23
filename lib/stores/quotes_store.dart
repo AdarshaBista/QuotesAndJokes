@@ -41,14 +41,19 @@ class QuotesStore {
   }
 
   Future<void> fetchQuote() async {
-    Quote fetchedQuote = await _quoteApiService.getRandom();
-    if (fetchedQuote == null) {
+    List<Quote> fetchedQuotes = await Future.wait([
+      _quoteApiService.getRandom(),
+      _quoteApiService.getRandom(),
+      _quoteApiService.getRandom(),
+    ]);
+
+    if (fetchedQuotes == null) {
       hasError = true;
       return;
     }
 
     hasError = false;
-    fetchedQuote.isFavourite = _favouriteQuotes.contains(fetchedQuote);
-    _quotes.add(fetchedQuote);
+    fetchedQuotes.forEach((q) => q.isFavourite = _favouriteQuotes.contains(q));
+    _quotes.addAll(fetchedQuotes);
   }
 }
