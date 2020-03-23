@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:animator/animator.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 import 'package:quotes_and_jokes/ui/shared/styles.dart';
 
@@ -25,63 +26,69 @@ class QuoteCard extends StatelessWidget {
           ..addAll(quote.author.split(' '));
     final String searchTerm = searchTerms.join(',');
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 48.0),
-      decoration: BoxDecoration(
-        color: AppColors.secondary,
-        borderRadius: BorderRadius.circular(16.0),
-        image: DecorationImage(
-          image:
-              NetworkImage('https://source.unsplash.com/800x800/?$searchTerm'),
-          fit: BoxFit.cover,
-          alignment: Alignment.centerRight,
-          colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.65), BlendMode.srcATop),
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            quote.text,
-            textAlign: TextAlign.left,
-            style: AppTextStyles.extraLargeLight.copyWith(
-              fontFamily: 'Sura',
-              fontSize: 30.0,
+    return Animator(
+      curve: Curves.easeIn,
+      builder: (Animation anim) => Opacity(
+        opacity: anim.value,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 48.0),
+          decoration: BoxDecoration(
+            color: AppColors.secondary,
+            borderRadius: BorderRadius.circular(16.0),
+            image: DecorationImage(
+              image: NetworkImage(
+                  'https://source.unsplash.com/800x800/?$searchTerm'),
+              fit: BoxFit.cover,
+              alignment: Alignment.centerRight,
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.65), BlendMode.srcATop),
             ),
           ),
-          const SizedBox(height: 24.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Flexible(
-                child: Text(
-                  '- ${quote.author}',
-                  style:
-                      AppTextStyles.mediumLight.copyWith(color: Colors.white70),
-                  textAlign: TextAlign.left,
-                  maxLines: 2,
+              Text(
+                quote.text,
+                textAlign: TextAlign.left,
+                style: AppTextStyles.extraLargeLight.copyWith(
+                  fontFamily: 'Sura',
+                  fontSize: 30.0,
                 ),
               ),
-              const SizedBox(width: 16.0),
-              FavouriteIcon(
-                color: AppColors.accent,
-                isFavourite: quote.isFavourite,
-                onPressed: () {
-                  Injector.getAsReactive<QuotesStore>().setState(
-                    (quotesStore) => quotesStore.toggleFavourite(quote),
-                  );
-                  UiHelper.showFavouriteStatus(
-                      context,
-                      quote.isFavourite ? Colors.green : Colors.redAccent,
-                      quote.isFavourite);
-                },
+              const SizedBox(height: 24.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                    child: Text(
+                      '- ${quote.author}',
+                      style: AppTextStyles.mediumLight
+                          .copyWith(color: Colors.white70),
+                      textAlign: TextAlign.left,
+                      maxLines: 2,
+                    ),
+                  ),
+                  const SizedBox(width: 16.0),
+                  FavouriteIcon(
+                    color: AppColors.accent,
+                    isFavourite: quote.isFavourite,
+                    onPressed: () {
+                      Injector.getAsReactive<QuotesStore>().setState(
+                        (quotesStore) => quotesStore.toggleFavourite(quote),
+                      );
+                      UiHelper.showFavouriteStatus(
+                          context,
+                          quote.isFavourite ? Colors.green : Colors.redAccent,
+                          quote.isFavourite);
+                    },
+                  ),
+                ],
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
