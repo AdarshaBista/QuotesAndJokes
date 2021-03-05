@@ -3,18 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:quotes_and_jokes/models/favouritable.dart';
 
 class Quote extends Favouritable {
-  final String id;
   final String text;
   final String author;
 
   Quote({
     localId,
     @required isFavourite,
-    @required this.id,
     @required this.text,
     @required this.author,
-  })  : assert(id != null),
-        assert(text != null),
+  })  : assert(text != null),
         assert(author != null),
         assert(isFavourite != null),
         super(
@@ -25,11 +22,10 @@ class Quote extends Favouritable {
   factory Quote.fromJson(Map<String, dynamic> json) {
     return Quote(
       localId: json['localId'],
-      id: json['_id'] as String,
-      text: json['quoteText'] as String,
-      author: (json['quoteAuthor'] as String).isEmpty
+      text: json['text'] as String,
+      author: (json['author'] as String).isEmpty
           ? 'Unknown'
-          : json['quoteAuthor'] as String,
+          : json['author'] as String,
       isFavourite: json['isFavourite'] ?? false,
     );
   }
@@ -37,19 +33,18 @@ class Quote extends Favouritable {
   @override
   Map<String, dynamic> toJson() {
     return {
+      'text': text,
+      'author': author,
       'localId': localId,
       'isFavourite': isFavourite,
-      '_id': id,
-      'quoteText': text,
-      'quoteAuthor': author,
     };
   }
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Quote && runtimeType == other.runtimeType && id == other.id;
+      other is Quote && runtimeType == other.runtimeType;
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => text.hashCode ^ author.hashCode;
 }

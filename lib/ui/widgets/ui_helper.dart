@@ -3,11 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:quotes_and_jokes/ui/shared/styles.dart';
 
 class UiHelper {
-  static void showFavouriteStatus(BuildContext context, Color bgColor, bool value) {
+  static void showFavouriteStatus(
+    BuildContext context,
+    Color bgColor,
+    bool value,
+  ) {
     String msg = value ? 'Added to favourites!' : 'Removed from favourites!';
-    Color textColor = ThemeData.estimateBrightnessForColor(bgColor) == Brightness.light ? Colors.black : Colors.white;
+    Color textColor =
+        ThemeData.estimateBrightnessForColor(bgColor) == Brightness.light
+            ? Colors.black
+            : Colors.white;
 
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(milliseconds: 600),
         backgroundColor: bgColor,
